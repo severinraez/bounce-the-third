@@ -1,14 +1,8 @@
 ## Usage
 
+Install and update dependencies like jQuery, bourbon and normalize.css .
+
 ```
 rake install
-```
-
-Install bundle and bourbon.
-
-
-```
 rake update
 ```
-
-Update bundle and bourbon, fetch latest version of jQuery.

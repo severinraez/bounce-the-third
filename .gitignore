@@ -1,4 +1,5 @@
 .DS_Store
 .sass-cache
 source/coffeescripts/*
-source/stylesheets/bourbon/*
+source/stylesheets/vendor/bourbon/
+source/stylesheets/vendor/_normalize.scss

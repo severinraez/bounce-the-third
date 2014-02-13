@@ -15,17 +15,25 @@ class window.Sound
       'A#4': 466.16
       'B4': 493.88
 
-    @context = new AudioContext()
-    @oscillator = @context.createOscillator()
-
     @range = [@notes['F4'], @notes['C4']]
     @note = @range[0]
+
+    @context = new AudioContext()
+    @oscillator = @context.createOscillator()
+    @noiseOscillator = @context.createOscillator()
 
     @oscillator.type = 0 # sine wave
     @oscillator.frequency.value = @note
     @oscillator.connect @context.destination
     @oscillator.noteOn && @oscillator.noteOn(0)
 
+    @noiseOscillator.type = 0 # sine wave
+    @noiseOscillator.frequency.value = @note
+    @noiseOscillator.connect @context.destination
+    @noiseOscillator.noteOn && @noiseOscillator.noteOn(0.7)
+
+
   setHeight: (val) ->
     @note = @range[0] + val * (@range[1] - @range[0])
     @oscillator.frequency.value = @note
+    @noiseOscillator.frequency.value = @note

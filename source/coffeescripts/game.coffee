@@ -2,7 +2,7 @@
 class window.Game
   constructor: (@canvas, @size, @sound) ->
     @context = @canvas.getContext '2d'
-    @wooScale = new WooScale size.width - 200, 20, 180, 40
+    @wooScale = new WooScale size.width - 200, 20, 180, 40, @context
     @board = new Board 200, 200, @size.width / 2 - 100, @size.height - 50
     @ballStartPos =
       x: @size.width / 2

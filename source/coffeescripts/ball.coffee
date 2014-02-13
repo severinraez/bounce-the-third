@@ -23,7 +23,7 @@ class window.Ball
   draw: (context) ->
     context.beginPath()
     context.arc @x, @y, @radius, 0, Math.PI * 2
-    context.stroke()
+    context.fill()
 
   getY: () -> @y
 

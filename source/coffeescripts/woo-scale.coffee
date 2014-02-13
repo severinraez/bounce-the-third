@@ -27,3 +27,9 @@ class window.WooScale
     context.closePath()
     context.fill()
     context.restore()
+
+    @_drawText()
+
+  _drawText: () ->
+    @context.font = "#{@level*@level*60}pt Mystery Quest"
+    @context.fillText 'Woo', @x, @y + @height + 50

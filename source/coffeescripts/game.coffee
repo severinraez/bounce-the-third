@@ -2,6 +2,7 @@
 class window.Game
   constructor: (@canvas, @size, @sound) ->
     @context = @canvas.getContext '2d'
+    @wooScale = new WooScale size.width - 200, 20, 180, 40
     @board = new Board 200, 200, @size.width / 2 - 100, @size.height - 50
     @ballStartPos =
       x: @size.width / 2
@@ -20,6 +21,8 @@ class window.Game
     @sound.reset()
     startGame = () =>
       @state = @states.PLAYING
+      @wooScale.setLevel 0
+
     window.setTimeout startGame, 2000
 
   setSize: (size) ->
@@ -30,6 +33,8 @@ class window.Game
 
   render: () ->
     @context.clearRect 0, 0, @size.width, @size.height
+    @wooScale.draw @context
+
     unless @state == @states.END_SEQUENCE
       @ball.draw @context
 
@@ -49,6 +54,11 @@ class window.Game
     #make sure the sound doesn't get too high
     ballHeightProportion = @ball.getY() / @size.height
     ballHeightLimit =  -0.70595450290846
+
+    if @ball.getY() > 0
+      @wooScale.setLevel 0.3 * (1-(@ball.getY() / @size.height))
+    else
+      @wooScale.setLevel 0.3 + 0.7 * ballHeightProportion / ballHeightLimit
 
     @ball.modifySpeedY(0) if ballHeightProportion < ballHeightLimit
     @ball.modifySpeedX(-1) if @ball.getX() < 0 || @ball.getX() > @size.width

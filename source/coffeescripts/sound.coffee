@@ -3,6 +3,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext
 class window.Sound
   constructor: () ->
     @notes =
+      'G2': 98
+      'C3': 130.81
       'C4': 261.63
       'C#4': 277.18
       'D4': 293.66
@@ -23,21 +25,41 @@ class window.Sound
     @note = @range[0]
 
     @context = new AudioContext()
+    @sounding = false
+    @reset()
+
+  reset: () ->
+    @oscillator?.disconnect()
+    @noiseOscillator?.disconnect()
+    @sounding = false
+
     @oscillator = @context.createOscillator()
     @noiseOscillator = @context.createOscillator()
 
     @oscillator.type = 0 # sine wave
     @oscillator.frequency.value = @note
     @oscillator.connect @context.destination
-    @oscillator.noteOn && @oscillator.noteOn(0)
 
     @noiseOscillator.type = 0 # sine wave
     @noiseOscillator.frequency.value = @note
     @noiseOscillator.connect @context.destination
-    @noiseOscillator.noteOn && @noiseOscillator.noteOn(0.7)
-
 
   setHeight: (val) ->
+    unless @sounding
+      @sounding = true
+      @oscillator.noteOn && @oscillator.noteOn(0)
+      @noiseOscillator.noteOn && @noiseOscillator.noteOn(0.7)
+
     @note = @range[0] + val * (@range[1] - @range[0])
     @oscillator.frequency.value = @note
     @noiseOscillator.frequency.value = @note
+
+  gameOver: () ->
+    now = @context.currentTime;
+    @oscillator.frequency.setValueAtTime @note, now
+    @noiseOscillator.frequency.setValueAtTime @note, now
+    @oscillator.frequency.linearRampToValueAtTime @notes['C3'], now + 1
+    @noiseOscillator.frequency.linearRampToValueAtTime @notes['C3'], now + 1
+
+
+

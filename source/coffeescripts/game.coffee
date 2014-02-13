@@ -6,8 +6,21 @@ class window.Game
     @ballStartPos =
       x: @size.width / 2
       y: @size.height - 100
-    @ball = new Ball @ballStartPos.x, @ballStartPos.y
     @ballPeakY = 0
+    @states =
+      PLAYING: 0
+      END_SEQUENCE: 1
+      STARTING: 2
+
+    @start()
+
+  start: () ->
+    @ball = new Ball @ballStartPos.x, @ballStartPos.y
+    @state = @states.STARTING
+    @sound.reset()
+    startGame = () =>
+      @state = @states.PLAYING
+    window.setTimeout startGame, 2000
 
   setSize: (size) ->
     @size = size
@@ -17,10 +30,14 @@ class window.Game
 
   render: () ->
     @context.clearRect 0, 0, @size.width, @size.height
-    @ball.draw @context
+    unless @state == @states.END_SEQUENCE
+      @ball.draw @context
+
     @board.draw @context
 
   advance: (delta) ->
+    return unless @state == @states.PLAYING
+
     @ball.advance delta
 
     if @ball.collidesWithBoard @board
@@ -37,7 +54,11 @@ class window.Game
     @ball.modifySpeedX(-1) if @ball.getX() < 0 || @ball.getX() > @size.width
 
     if @ball.getY() > @size.height
-      @ball = new Ball @ballStartPos.x, @ballStartPos.y
+      @sound.gameOver()
+      @state = @states.END_SEQUENCE
+
+      continueGame = () =>  @start()
+      window.setTimeout continueGame, 1500
 
     @sound.setHeight 1 - (@ball.getY() / @size.height)
 

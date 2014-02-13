@@ -26,7 +26,7 @@ class window.Game
     @size = size
 
   onMove: (x, y) ->
-    @board.setPos x, y
+    @board.setPos x, @board.getY()
 
   render: () ->
     @context.clearRect 0, 0, @size.width, @size.height

@@ -1,8 +1,1 @@
-## Usage
-
-Install and update dependencies like jQuery, bourbon and normalize.css .
-
-```
-rake install
-rake update
-```
+mit gröschter wahrschinlechkeit ds dümmschte woni je ha programmiert... aber... es isch so geeeeil!

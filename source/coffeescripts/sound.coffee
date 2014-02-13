@@ -14,8 +14,12 @@ class window.Sound
       'A4': 440
       'A#4': 466.16
       'B4': 493.88
+      'C5': 523.25
+      'E5': 659.25
+      'F5': 698.46
+      'G5': 783.99
 
-    @range = [@notes['F4'], @notes['C4']]
+    @range = [@notes['C4'], @notes['C5']]
     @note = @range[0]
 
     @context = new AudioContext()

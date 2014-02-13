@@ -37,3 +37,6 @@ class window.Ball
 
   modifySpeedY: (mod) -> @speedY *= mod; @clampSpeed()
   accelerateY: (amount) -> @speedY += amount; @clampSpeed()
+  modifySpeedX: (mod) -> @speedX *= mod; @clampSpeed()
+  accelerateX: (amount) -> @speedX += amount; @clampSpeed()
+  getX: () -> @x

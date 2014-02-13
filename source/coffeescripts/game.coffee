@@ -2,7 +2,7 @@
 class window.Game
   constructor: (@canvas, @size, @sound) ->
     @context = @canvas.getContext '2d'
-    @board = new Board 200, 50, @size.width / 2 - 100, @size.height - 50
+    @board = new Board 200, 200, @size.width / 2 - 100, @size.height - 50
     @ballStartPos =
       x: @size.width / 2
       y: @size.height - 100
@@ -27,11 +27,14 @@ class window.Game
       @ball.placeAbove(@board.getY())
       @ball.modifySpeedY -1
       @ball.accelerateY -20
+      @ball.accelerateX -10 + Math.random() * 20
 
     #make sure the sound doesn't get too high
     ballHeightProportion = @ball.getY() / @size.height
     ballHeightLimit =  -0.70595450290846
+
     @ball.modifySpeedY(0) if ballHeightProportion < ballHeightLimit
+    @ball.modifySpeedX(-1) if @ball.getX() < 0 || @ball.getX() > @size.width
 
     if @ball.getY() > @size.height
       @ball = new Ball @ballStartPos.x, @ballStartPos.y

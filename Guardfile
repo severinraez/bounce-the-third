@@ -11,7 +11,8 @@ guard 'sass',
       :output       => 'build/stylesheets',
       :all_on_start => true,
       :debug_info   => true,
-      :line_numbers => true 
+      :line_numbers => true,
+      :compass => true
 
 guard 'coffeescript',
       :input        => 'source/coffeescripts', 
